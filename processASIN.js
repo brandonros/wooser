@@ -1,11 +1,9 @@
-var db = require('./db');
-
 var getPrice = require('./getPrice');
 var storePrice = require('./storePrice');
 
-module.exports = function (asin) {
+module.exports = function (db, asin) {
 	return getPrice(asin)
 		.then(function (price) {
-			return storePrice(asin, price);
+			return storePrice(db, asin, price);
 		});
 };
