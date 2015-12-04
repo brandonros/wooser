@@ -1,3 +1,4 @@
 node_modules/
 config.js
+asins.js
 prices.sqlite
