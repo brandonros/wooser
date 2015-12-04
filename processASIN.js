@@ -1,11 +1,11 @@
-var getPrice = require('./getPrice');
-var storePrice = require('./storePrice');
+var getASIN = require('./getASIN');
+var storeASIN = require('./storeASIN');
 
 module.exports = function (db, asin) {
-	return getPrice(asin)
-		.then(function (price) {
-			console.log(new Date(), asin, price);
+	return getASIN(asin)
+		.then(function (res) {
+			console.log(new Date(), res);
 			
-			return storePrice(db, asin, price);
+			return storeASIN(db, asin, res.name, res.price);
 		});
 };

@@ -14,7 +14,7 @@ module.exports = function (asin) {
 		var options = {
 		  'IdType': 'ASIN',
 		  'ItemId': asin,
-		  'ResponseGroup': 'Offers'
+		  'ResponseGroup': 'Offers,ItemAttributes'
 		};
 
 		opHelper.execute('ItemLookup', options, function (err, res) {
@@ -22,7 +22,14 @@ module.exports = function (asin) {
 				return reject(err);
 			}
 
-		    resolve(parseInt(res.ItemLookupResponse.Items[0].Item[0].OfferSummary[0].LowestNewPrice[0].Amount[0]) / 100);
+			var title = res.ItemLookupResponse.Items[0].Item[0].ItemAttributes[0].Title[0];
+			var offerListing = res.ItemLookupResponse.Items[0].Item[0].Offers[0].Offer[0].OfferListing[0];
+			var price = offerListing.SalePrice ? offerListing.SalePrice[0].Amount[0] : offerListing.Price[0].Amount[0];
+		
+		    resolve({
+		    	price: parseInt(price) / 100,
+		    	name: title
+		    });
 		});
 	});
 };
