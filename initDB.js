@@ -3,6 +3,7 @@ module.exports = function (db) {
 		table.increments('id');
 		table.string('asin').unique().index();
 		table.string('name').index();
+		table.string('image');
 	})
 	.then(function () {
 		return db.schema.createTableIfNotExists('prices', function (table) {
